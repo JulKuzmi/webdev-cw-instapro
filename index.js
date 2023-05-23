@@ -1,4 +1,4 @@
-import { getPosts, newUserPost, getUsersPosts, getItLikes, getDislike } from "./api.js";
+import { getPosts, newUserPost, getUserPosts, getItLikes, getDislike } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -51,7 +51,7 @@ export const logout = () => {
 /**
  * Включает страницу приложения
  */
-export const goToPage = (newPage, data) => {
+ export const goToPage = (newPage, data) => {
   if (
     [
       POSTS_PAGE,
@@ -78,6 +78,7 @@ export const goToPage = (newPage, data) => {
           renderApp();
         })
         .catch((error) => {
+          alert("Кажется у Вас упал интернет, поробуйте немного позже")
           console.error(error);
           goToPage(POSTS_PAGE);
         });
@@ -86,7 +87,7 @@ export const goToPage = (newPage, data) => {
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
-      return getUsersPosts({ userId: data.userId, token: getToken()})
+      return getUserPosts({ userId: data.userId, token: getToken()})
       .then((newPosts) => {
       page = USER_POSTS_PAGE;
       posts = newPosts;
@@ -134,7 +135,7 @@ const renderApp = () => {
         newUserPost({
           description: description.replaceAll('<','&lt;').replaceAll('>','&gt;'),
           imageUrl: imageUrl,
-          token: getToken()
+          token: getToken(),
         });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
@@ -151,7 +152,7 @@ const renderApp = () => {
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
     appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return renderAddPostPageComponent({appEl});
+    return renderPostsPageComponent({appEl});
   }
 };
 

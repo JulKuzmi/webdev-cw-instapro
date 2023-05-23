@@ -2,7 +2,7 @@
  export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
    let imageUrl = "";
    const render = () => {
-    // TODO: Реализовать страницу добавления поста
+
     const appHtml = `
     <div class="page-container">
       <div class="header-container"></div>
@@ -23,23 +23,24 @@
     <button class="button" id="add-button">Добавить</button>
      </div>
     </div>
-  `;
+   `;
 
-    appEl.innerHTML = appHtml;
+   appEl.innerHTML = appHtml;
 
-    document.getElementById("add-button").addEventListener("click", () => {
-      onAddPostClick({
-        description: document.querySelector(".textarea").value ,
-        imageUrl: imageUrl,
-      });
-    });
-  };
+   document.getElementById("add-button").addEventListener("click", () => {
 
-  render();
-  renderUploadImageComponent({
-    element: appEl.querySelector('.file-upload-image-container'),
-    onImageUrlChange(newImageUrl) {
-      imageUrl = newImageUrl;
-    }
-  })
+     onAddPostClick({
+       description: document.querySelector(".textarea").value,
+       imageUrl: imageUrl,
+     });
+   });
+ };
+
+ render();
+ renderUploadImageComponent({
+   element: appEl.querySelector('.file-upload-image-container'),
+   onImageUrlChange(newImageUrl){
+     imageUrl = newImageUrl;
+   },
+ });
 }

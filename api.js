@@ -21,9 +21,9 @@ export function getPosts({ token }) {
     .then((data) => {
       return data.posts;
     });
-}
- export function getUsersPosts({ userId, token }) {
-  return fetch(`${postsHost}/users-posts/${userId}`, {
+ }
+ export function getUserPosts({ userId, token }) {
+  return fetch(`${postsHost}/user-posts/${userId}`, {
     method: "GET",
     headers: {
       Authorization: token,
@@ -38,7 +38,7 @@ export function getPosts({ token }) {
     .then((data) => {
       return data.posts;
     });
-} 
+ } 
  export function newUserPost({description, imageUrl, token,}) {
   return fetch(postsHost, {
     method: "POST",
@@ -55,12 +55,12 @@ export function getPosts({ token }) {
     }
     return response.json();
   });
-}
+ }
 
 
 
-// https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
-export function registerUser({ login, password, name, imageUrl }) {
+ // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
+ export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
     body: JSON.stringify({
@@ -75,9 +75,9 @@ export function registerUser({ login, password, name, imageUrl }) {
     }
     return response.json();
   });
-}
+ }
 
-export function loginUser({ login, password }) {
+ export function loginUser({ login, password }) {
   return fetch(baseHost + "/api/user/login", {
     method: "POST",
     body: JSON.stringify({
@@ -90,10 +90,10 @@ export function loginUser({ login, password }) {
     }
     return response.json();
   });
-}
+ }
 
-// Загружает картинку в облако, возвращает url загруженной картинки
-export function uploadImage({ file }) {
+ // Загружает картинку в облако, возвращает url загруженной картинки
+ export function uploadImage({ file }) {
   const data = new FormData();
   data.append("file", file);
 
@@ -103,9 +103,9 @@ export function uploadImage({ file }) {
   }).then((response) => {
     return response.json();
   });
-}
+ }
 
-export const getItLikes = ({ id, token }) => {
+ export const getItLikes = ({ id, token }) => {
   return fetch (postsHost + '/' + id  + '/like', {
     method: "POST",
     headers: {
@@ -122,8 +122,8 @@ export const getItLikes = ({ id, token }) => {
       return response;
     })
     .then((response) => response.json());
-}
-export const getDislike = ({ id, token }) => {
+ }
+ export const getDislike = ({ id, token }) => {
   return fetch(postsHost + '/' + id  + '/dislike', {
     method: "POST",
     headers: {
