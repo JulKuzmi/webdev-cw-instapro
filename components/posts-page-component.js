@@ -19,9 +19,9 @@ export function renderPostsPageComponent({ appEl }) {
     }else if (post.likes.length === 2) {
       likes = `${post.likes[0].name}, ${post.likes[1].name}`;
     } else if (post.likes.length > 2) {
-      likes = `${post.likes[0].name}, ${post.likes[1].name} и еще ${post.likes.length - 2} человек`;
+      likes = `${post.likes[0].name}, ${post.likes[1].name}  ${post.likes.length - 2}`;
     }
-  return ` <li data-index= "${index}"class="post">
+   return ` <li data-index= "${index}"class="post">
                     <div class="post-header" data-user-id="${post.user.id}">
                         <img src="${post.user.imageUrl}" class="post-header__user-image">
                         <p class="post-header__user-name">${post.user.name}</p>
@@ -69,7 +69,7 @@ for (let likeEl of document.querySelectorAll(".like-button")) {
     event.stopPropagation();
     likeEl.classList.add("load-like");
     if(!user) {
-      alert('Авторизуйся,пожалуйста');
+      alert('Авторизуйтесь,пожалуйста');
       return;
     }
     putLike({postId: likeEl.dataset.postId});

@@ -92,7 +92,16 @@
   padding-bottom: 5px;
   cursor: pointer;
 }
- 
+
+.load-like{
+  animation: moving 3s infinite linear;
+  transform-origin: -80px -80px;
+}
+@keyframes moving {
+  100% {transform: rotate(-360deg);}
+  
+}
+
 .user-name {
   font-weight: 500;
 }
