@@ -104,3 +104,41 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export const getItLikes = ({ id, token }) => {
+  return fetch (postsHost + '/' + id  + '/like', {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if(response.status === 500) {
+        throw new Error("Внутренняя ошибка сервера");
+      }
+      if(response.status === 401) {
+        throw new Error("HTTP Error 401 – Ошибка авторизации");
+      }
+      return response;
+    })
+    .then((response) => response.json());
+}
+export const getDislike = ({ id, token }) => {
+  return fetch(postsHost + '/' + id  + '/dislike', {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if(response.status === 500) {
+        throw new Error("Внутренняя ошибка сервера");
+      }
+      if(response.status === 401) {
+        throw new Error("HTTP Error 401 – Ошибка авторизации");
+      }
+      return response;
+    })
+    .then((response) => response.json());
+}
+
