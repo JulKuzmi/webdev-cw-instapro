@@ -22,8 +22,8 @@ export function getPosts({ token }) {
       return data.posts;
     });
 }
- export function getUsersPosts({ idUser, token }) {
-  return fetch(`${postsHost}/users-posts/${idUser}`, {
+ export function getUsersPosts({ userId, token }) {
+  return fetch(`${postsHost}/users-posts/${userId}`, {
     method: "GET",
     headers: {
       Authorization: token,
@@ -39,6 +39,23 @@ export function getPosts({ token }) {
       return data.posts;
     });
 } 
+ export function newUserPost({postDescription, imageUrl, token,}) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+    postDescription: `${postDescription}`,
+    imageUrl:`${imageUrl}`,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Формат не подходит");
+    }
+    return response.json();
+  });
+}
 
 
 
