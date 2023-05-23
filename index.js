@@ -114,6 +114,11 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
+        newUserPost({
+          description: description.replaceAll('<','&lt;').replaceAll('>','&gt;'),
+          imageUrl: imageUrl,
+          token: getToken()
+        });
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },
@@ -129,7 +134,7 @@ const renderApp = () => {
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
     appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return;
+    return renderAddPostPageComponent({appEl});
   }
 };
 

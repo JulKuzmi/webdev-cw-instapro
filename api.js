@@ -39,11 +39,11 @@ export function getPosts({ token }) {
       return data.posts;
     });
 } 
- export function newUserPost({postDescription, imageUrl, token,}) {
+ export function newUserPost({description, imageUrl, token,}) {
   return fetch(postsHost, {
     method: "POST",
     body: JSON.stringify({
-    postDescription: `${postDescription}`,
+    description: `${description}`,
     imageUrl:`${imageUrl}`,
     }),
     headers: {
