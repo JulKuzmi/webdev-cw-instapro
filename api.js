@@ -1,6 +1,6 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
+const personalKey = "secondcourse-julia";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -21,10 +21,46 @@ export function getPosts({ token }) {
     .then((data) => {
       return data.posts;
     });
-}
+ }
+ export function getUserPosts({ userId, token }) {
+  return fetch(`${postsHost}/user-posts/${userId}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401){
+        throw new Error("Нет авторизации");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+ } 
+ export function newUserPost({description, imageUrl, token,}) {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+    description: `${description}`,
+    imageUrl:`${imageUrl}`,
+    }),
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Формат не подходит");
+    }
+    return response.json();
+  });
+ }
 
-// https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
-export function registerUser({ login, password, name, imageUrl }) {
+
+
+ // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
+ export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
     body: JSON.stringify({
@@ -39,9 +75,9 @@ export function registerUser({ login, password, name, imageUrl }) {
     }
     return response.json();
   });
-}
+ }
 
-export function loginUser({ login, password }) {
+ export function loginUser({ login, password }) {
   return fetch(baseHost + "/api/user/login", {
     method: "POST",
     body: JSON.stringify({
@@ -54,10 +90,10 @@ export function loginUser({ login, password }) {
     }
     return response.json();
   });
-}
+ }
 
-// Загружает картинку в облако, возвращает url загруженной картинки
-export function uploadImage({ file }) {
+ // Загружает картинку в облако, возвращает url загруженной картинки
+ export function uploadImage({ file }) {
   const data = new FormData();
   data.append("file", file);
 
@@ -67,4 +103,42 @@ export function uploadImage({ file }) {
   }).then((response) => {
     return response.json();
   });
+ }
+
+ export const getItLikes = ({ id, token }) => {
+  return fetch (postsHost + '/' + id  + '/like', {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if(response.status === 500) {
+        throw new Error("Внутренняя ошибка сервера");
+      }
+      if(response.status === 401) {
+        throw new Error("HTTP Error 401 – Ошибка авторизации");
+      }
+      return response;
+    })
+    .then((response) => response.json());
+ }
+ export const getDislike = ({ id, token }) => {
+  return fetch(postsHost + '/' + id  + '/dislike', {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if(response.status === 500) {
+        throw new Error("Внутренняя ошибка сервера");
+      }
+      if(response.status === 401) {
+        throw new Error("HTTP Error 401 – Ошибка авторизации");
+      }
+      return response;
+    })
+    .then((response) => response.json());
 }
+

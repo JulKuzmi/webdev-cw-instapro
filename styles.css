@@ -93,6 +93,15 @@
   cursor: pointer;
 }
 
+.load-like{
+  animation: moving 3s infinite linear;
+  transform-origin: -80px -80px;
+}
+@keyframes moving {
+  100% {transform: rotate(-360deg);}
+  
+}
+
 .user-name {
   font-weight: 500;
 }
@@ -163,6 +172,7 @@
 
 .form-error {
   color: red;
+  text-shadow: 1px 1px 2px rgb(243, 141, 141);
 }
 
 .form-footer {
